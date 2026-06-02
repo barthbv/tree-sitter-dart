@@ -236,8 +236,7 @@ module.exports = grammar({
             ),
             seq(
                 optional($._metadata),
-                $.function_signature,
-                $.function_body
+                $.function_declaration,
             ),
             // Top-level function with a record return type preceded by
             // bare annotations. See `_record_return_class_member` for the
@@ -519,7 +518,7 @@ module.exports = grammar({
                 seq('{',
                     $._expression,
                     '}'),
-                $.identifier_dollar_escaped
+                $.identifier
             )
         ),
         _sub_string_test: $ => seq('$', /[^a-zA-Z_{]/),
@@ -2065,10 +2064,7 @@ module.exports = grammar({
                     seq(optional($._metadata), $.declaration, $._semicolon),
                     seq(
                         optional($._metadata),
-                        seq(
-                            $.method_signature,
-                            $.function_body
-                        ),
+                        $.method_declaration,
                     ),
                     prec.dynamic(-10, $._record_return_class_member),
                 )
@@ -2078,10 +2074,7 @@ module.exports = grammar({
 
         _class_member_definition: $ => choice(
             seq($.declaration, $._semicolon),
-            seq(
-                $.method_signature,
-                $.function_body
-            ),
+            $.method_declaration,
         ),
 
         getter_signature: $ => seq(
@@ -2110,6 +2103,16 @@ module.exports = grammar({
                 )
             ),
             $.operator_signature
+        ),
+
+        method_declaration: $ => seq(
+          $.method_signature,
+          $.function_body
+        ),
+
+        function_declaration: $ => seq(
+          $.function_signature,
+          $.function_body
         ),
 
         declaration: $ => choice(

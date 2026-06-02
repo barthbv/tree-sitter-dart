@@ -7,7 +7,8 @@
       "scope": "source.dart",
       "file-types": ["dart"],
       "highlights": "queries/highlights.scm",
-      "tags": "queries/tags.scm"
+      "tags": "queries/tags.scm",
+      "locals": "queries/locals.scm"
     }
   ],
   "metadata": {

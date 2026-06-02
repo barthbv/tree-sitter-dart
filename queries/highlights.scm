@@ -1,6 +1,12 @@
 ; Variable
 (identifier) @variable
 
+(initialized_identifier
+  (identifier) @variable.member)
+
+(static_final_declaration
+  (identifier) @constant)
+
 ; Keywords
 ; --------------------
 [
@@ -82,10 +88,10 @@
   "}" @punctuation.special
 ) @none
 
-(template_substitution
-  "$" @punctuation.special
-  (identifier_dollar_escaped) @variable
-) @none
+; (template_substitution
+;   "$" @punctuation.special
+;   (identifier_dollar_escaped) @variable
+; ) @none
 
 (escape_sequence) @string.escape
 
@@ -153,10 +159,10 @@
   name: (identifier) @function)
 (getter_signature
   "get" @keyword
-  (identifier) @function)
+  (identifier) @variable.member)
 (setter_signature
   "set" @keyword
-  name: (identifier) @function)
+  name: (identifier) @variable.member)
 (operator_signature
   "operator" @keyword)
 
@@ -182,7 +188,7 @@
 
 ("Function" @type)
 
-(this) @variable.builtin
+; (this) @variable.builtin
 
 ; properties
 
@@ -215,10 +221,10 @@
 ; Parameters
 ; --------------------
 (formal_parameter
-    name: (identifier) @identifier.parameter)
+    name: (identifier) @variable.parameter)
 
 (named_argument
-  (label (identifier) @identifier.parameter))
+  (label (identifier) @variable.parameter))
 
 ; Literals
 ; --------------------
@@ -243,8 +249,8 @@
 ; Annotations
 ; --------------------
 (annotation
-  "@" @attribute
-  name: (identifier) @attribute)
+  "@" @attribute.anchor
+  name: (identifier) @attribute.identifier)
 
 ; Modern Dart 3+ Features
 ; --------------------
@@ -276,4 +282,3 @@
 ; Record Types
 (record_type_field
   (identifier) @variable)
-
